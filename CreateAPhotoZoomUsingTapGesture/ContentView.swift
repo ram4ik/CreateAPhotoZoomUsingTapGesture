@@ -9,8 +9,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var zoomPhoto = true
     var body: some View {
-        Text("Hello World")
+        ZStack {
+            Image("selfie")
+                .resizable()
+                .aspectRatio(contentMode: zoomPhoto ? .fit : .fill)
+                .shadow(radius: 2)
+                .rotationEffect(.degrees(zoomPhoto ? 0 : 30), anchor: .bottom)
+                .animation(Animation.spring(
+                    response: 0.87, // like mass of an object
+                    dampingFraction: 0.7, // larger value reduces bounciness
+                    blendDuration: 1))
+                .onTapGesture {
+                    self.zoomPhoto.toggle()
+            }
+        }
     }
 }
 
